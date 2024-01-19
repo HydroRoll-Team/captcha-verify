@@ -11,8 +11,6 @@ def about():
 
 @app.route("/<path:url>")
 def display_external_content(url):
-    if not url:
-        return "Please enter your verify captcha url."
     try:
         response = requests.get(url)
 
@@ -22,7 +20,3 @@ def display_external_content(url):
         return render_template("display.html", content=response.text)
     except Exception as e:
         return f"An error occurred: {str(e)}"
-
-
-if __name__ == "__main__":
-    app.run(port=5500)  # type: ignore
