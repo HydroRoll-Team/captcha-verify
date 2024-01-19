@@ -1,7 +1,9 @@
 from flask import Flask, render_template
 import requests
+import re
 
 app = Flask(__name__)
+pattern_http = re.compile(r'(https?://)?\S+')
 
 @app.route('/')
 def home():
@@ -13,6 +15,7 @@ def about():
 
 @app.route("/<path:url>")
 def display_external_content(url):
+    url = 'https://' + url.replace('http://', '').replace('https://', '')
     try:
         response = requests.get(url)
 
@@ -22,3 +25,5 @@ def display_external_content(url):
         return render_template("display.html", content=response.text)
     except Exception as e:
         return f"An error occurred: {str(e)}"
+    
+app.run()
