@@ -20,3 +20,5 @@ def display_external_content(url):
         return render_template("display.html", content=response.text)
     except Exception as e:
         return f"An error occurred: {str(e)}"
+    
+app.run()
